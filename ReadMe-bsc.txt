@@ -1,0 +1,87 @@
+/*************************************************************************\
+
+  Copyright 2014 Zhejiang University.
+  All Rights Reserved.
+
+  Permission to use, copy, modify and distribute this software and its
+  documentation for educational, research and non-profit purposes, without
+   fee, and without a written agreement is hereby granted, provided that the
+  above copyright notice appear in all
+  copies.
+
+  The authors may be contacted via:
+
+  EMail:   tang_m@zju.edu.cn
+
+
+\**************************************************************************/
+/*************************************************************************\
+
+  Copyright 2010 The University of North Carolina at Chapel Hill.
+  All Rights Reserved.
+
+  Permission to use, copy, modify and distribute this software and its
+  documentation for educational, research and non-profit purposes, without
+   fee, and without a written agreement is hereby granted, provided that the
+  above copyright notice and the following three paragraphs appear in all
+  copies.
+
+  IN NO EVENT SHALL THE UNIVERSITY OF NORTH CAROLINA AT CHAPEL HILL BE
+  LIABLE TO ANY PARTY FOR DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR
+  CONSEQUENTIAL DAMAGES, INCLUDING LOST PROFITS, ARISING OUT OF THE
+  USE OF THIS SOFTWARE AND ITS DOCUMENTATION, EVEN IF THE UNIVERSITY
+  OF NORTH CAROLINA HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH
+  DAMAGES.
+
+  THE UNIVERSITY OF NORTH CAROLINA SPECIFICALLY DISCLAIM ANY
+  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+  MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE SOFTWARE
+  PROVIDED HEREUNDER IS ON AN "AS IS" BASIS, AND THE UNIVERSITY OF
+  NORTH CAROLINA HAS NO OBLIGATIONS TO PROVIDE MAINTENANCE, SUPPORT,
+  UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
+
+  The authors may be contacted via:
+
+  US Mail:       GAMMA Research Group at UNC
+                       Department of Computer Science
+                       Sitterson Hall, CB #3175
+                       University of N. Carolina
+                       Chapel Hill, NC 27599-3175
+
+  Phone:            (919)962-1749
+
+  EMail:              geom@cs.unc.edu; tang_m@zju.edu.cn
+
+
+\**************************************************************************/
+
+1. Usage:
+
+The entry points for VF/EE tests are:
+
+		bool
+		Intersect_VF_robust(
+				const Vec3d &a0, const Vec3d &b0, const Vec3d &c0, const Vec3d &d0,
+				const Vec3d &a1, const Vec3d &b1, const Vec3d &c1, const Vec3d &d1)
+
+and
+
+
+		bool
+		Intersect_EE_robust(
+				const Vec3d &a0, const Vec3d &b0, const Vec3d &c0, const Vec3d &d0,
+				const Vec3d &a1, const Vec3d &b1, const Vec3d &c1, const Vec3d &d1)
+
+
+We are using the IntervalType/expansion classes of El Topo.
+It can be downloaded from http://www.cs.ubc.ca/labs/imager/tr/2012/ExactContinuousCollisionDetection/exactccd.tar.gz
+
+2. Reference:
+Min Tang, Ruofeng Tong, Zhendong Wang, Dinesh Manocha, Fast and Exact Continuous Collision Detection with Bernstein Sign Classification, ACM Transactions on Graphics, 33(6), Article 186 (November 2014), 8 pages (Proc. of ACM SIGGRAPH Asia), 2014.
+
+3. Bug Report:
+We would be interested in knowing more about your application as well as any 
+ bugs you may encounter when using the codes. You can
+ report them by sending e-mail to geom@cs.unc.edu or tangm@cs.unc.edu
+
+ 
