@@ -8,7 +8,7 @@
 
 #include <vector>
 
-// The basic type is essentially a vector of *increasing* and 
+// The basic type is essentially a vector of *increasing* and
 // *nonoverlapping* doubles, apart from allowed zeroes anywhere.
 
 class expansion;
@@ -87,9 +87,9 @@ print_full( const expansion& e );
 
 class expansion
 {
-      
+
 public:
-   
+
    std::vector<double> v;
 
    expansion()
@@ -99,25 +99,25 @@ public:
    explicit expansion( double val )
     : v(1, val)
    {}
-   
+
    expansion( std::size_t n, double val )
    : v(n,val)
    {}
-   
+
    virtual ~expansion() {}
-   
+
    expansion& operator+=(const expansion &rhs)
    {
       add( *this, rhs, *this );
       return *this;
    }
-   
+
    expansion& operator-=(const expansion &rhs)
    {
       subtract( *this, rhs, *this );
       return *this;
    }
-   
+
    expansion& operator*=(const expansion &rhs)
    {
       expansion p;
@@ -125,52 +125,68 @@ public:
       *this = p;
       return *this;
    }
-   
-   inline expansion operator+(const expansion &other) const 
+
+   inline expansion operator+(const expansion &other) const
    {
-      expansion result = *this;     
-      result += other;  
-      return result;              
+      expansion result = *this;
+      result += other;
+      return result;
    }
-   
-   inline expansion operator-(const expansion &other) const 
+
+   inline expansion operator-(const expansion &other) const
    {
-      expansion result = *this;    
-      result -= other;  
-      return result;              
+      expansion result = *this;
+      result -= other;
+      return result;
    }
-   
-   
+
+
    inline expansion operator*(const expansion &other) const
    {
-      expansion result = *this;    
-      result *= other;  
-      return result;              
+      expansion result = *this;
+      result *= other;
+      return result;
    }
-   
+
    inline expansion operator-( ) const
    {
       expansion result;
       negative( *this, result );
       return result;
    }
-   
+
+   bool is_certainly_negative() const{
+       return sign(*this) < 0;
+   }
+
+   bool is_certainly_positive() const{
+       return sign(*this) > 0;
+   }
+
+   bool is_certainly_zero() const{
+       return is_zero(*this);
+   }
+
+   bool same_sign(const expansion& b) const{
+       return sign(*this) == sign(b);
+   }
+
    inline double estimate() const
    {
       return ::estimate( *this );
    }
-   
+
    inline bool indefinite_sign() const
    {
       return false;
    }
-   
+
    static void begin_special_arithmetic()
    {}
-   
+
    static void end_special_arithmetic()
    {}
-   
+
    inline void clear()
    {
       v.clear();
@@ -185,10 +201,10 @@ public:
 
 
 inline void make_expansion( double a, expansion& e )
-{ 
-   if(a) 
+{
+   if(a)
    {
-      e = expansion(1, a); 
+      e = expansion(1, a);
    }
    else
    {
