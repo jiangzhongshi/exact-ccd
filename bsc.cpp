@@ -58,15 +58,21 @@ EMail:              geom@cs.unc.edu; tang_m@zju.edu.cn
 #pragma warning(disable: 4996)
 #include "rootparitycollisiontest.h"
 #include <cstdlib>
+#include <cfloat>
 
-namespace rootparity 
+namespace rootparity
 {
-    
+
     namespace   // unnamed namespace for local functions
     {
 		template<unsigned int N, class T>
-		inline void make_vector( const Vec<N,double>& in, Vec<N,T>& out );
-        
+		inline void make_vector( const Vec<N,double>& in, Vec<N,T>& out )
+        {
+            for(int i = 0; i < N; i++){
+                out[i] = T(in[i]);
+            }
+        }
+
 		//					| a  b |
 		//  return		| c  d | = a*d - b*c
 		template <class T>
@@ -79,7 +85,7 @@ namespace rootparity
 		template <class T>
 		inline bool bezierDecomposition(const T &k0, const T &k1, const T &k2, const T &k3,
 							const T &j0, const T &j1, const T &j2,
-							T &m0, T &m1, 
+							T &m0, T &m1,
 							T &n0, T &n1)
 		{
 			T A = (j1-j2)*T(2.0);
@@ -88,7 +94,7 @@ namespace rootparity
 			T D = k1*T(3.0) - k0*T(2.0) -k3;
 			T E = j2-j0;
 			T F = (j1-j0)*T(2.0);
-			
+
 			T tt = det2x2(A, B, E, F);
 			 if ( tt.is_certainly_zero() ) {
 				printf("@@@det = 0.\n");
@@ -249,7 +255,7 @@ namespace rootparity
 			double p3 = B;
 
 			double e1, e2; // conservative bounds, can be calculated on the fly
-			
+
 			e1 = DBL_EPSILON*100;
 			e2 = DBL_EPSILON*100;
 
@@ -416,7 +422,7 @@ namespace rootparity
 
 				if ((c.kk0+c.kk2-c.kk1*T(2.0)).is_certainly_zero()) {
 					printf("@@@degenerated ...\n");
-					
+
 					//T t = lineRoot(c.kk0, c.kk2);
 					//T fk = evaluateBezier(c.k0, c.k1, c.k2, c.k3, t);
 					T fk = _evaluateBezier(c.k0, c.k1, c.k2, c.k3, c.kk0, -c.kk2);
@@ -506,8 +512,8 @@ namespace rootparity
 				lt0 = t0;
 				lt1 = t0;
 				return true;
-			} 
-			
+			}
+
 			if ((c.ct == 0) ||
 				(c.ct == 1 && diffSign(c.k0, c.k3))) {
 				//T t = lineRoot(t0, t1);
@@ -526,7 +532,7 @@ namespace rootparity
 				}
 				return true;
 			}
-			
+
 			if (c.ct == 1) {
 //				T t = lineRoot(t0, t1);
 //				T ft = evaluateBezier(c.k0, c.k1, c.k2, c.k3, t);
@@ -599,7 +605,7 @@ namespace rootparity
 					}
 
 					continue;
-				} 
+				}
 
 				if (false == bezierDecomposition(c.k0, c.k1, c.k2, c.k3, j0, j1, j2, s0, s1, t0, t1)) {
 					getSigns(j0, j2, c, lt0, lt1);
@@ -634,11 +640,11 @@ namespace rootparity
 					continue;
 				}
 
-				// kill an possiblity 
+				// kill an possiblity
 				if (sameSign(lt0, kt0))
 					bt0 = false;
 
-				// kill an possiblity 
+				// kill an possiblity
 				if (sameSign(lt1, kt1))
 					bt1 = false;
 
@@ -676,23 +682,27 @@ namespace rootparity
 				Vec<3, T> bt = b0*(T(1.0)-t)+b1*t;
 				Vec<3, T> ct = c0*(T(1.0)-t)+c1*t;
 				Vec<3, T> dt = d0*(T(1.0)-t)+d1*t;
-			
+
 				bool ret1 = Intersect_robust(a0, b0, c0, d0, at, bt, ct, dt, ee_test);
 				bool ret2 = Intersect_robust(at, bt, ct, dt, a1, b1, c1, d1, ee_test);
 
+                T::end_special_arithmetic();
 				return ret1 || ret2;
 			}
 
 			bcrv<T> c(k0, k1, k2, k3, kk0, kk1, kk2, ct);
 
 			if (!coplanarTest(c)) {
+                T::end_special_arithmetic();
 				return false;
 			}
 
 			if (!insideTest(a0, b0, c0, d0, a1, b1, c1, d1, c, ee_test)) {
+                T::end_special_arithmetic();
 				return false;
 			}
 
+            T::end_special_arithmetic();
 			return true;
 		}
 
@@ -767,5 +777,5 @@ namespace rootparity
 
 			return ret;
 		}
-	} 
-}  // namespace rootparity 
+	}
+}  // namespace rootparity

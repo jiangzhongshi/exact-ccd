@@ -8,7 +8,7 @@
 #include <iostream>
 
 namespace {
-   
+
 //==============================================================================
 void
 two_sum(double a,
@@ -72,11 +72,11 @@ is_zero( const expansion& a )
 
 
 //==============================================================================
-int 
+int
 sign( const expansion& a )
 {
    if ( a.v.size() == 0 ) { return 0; }
-   
+
    // REVIEW: I'm assuming we can get the sign of the expansion by the sign of its leading term (i.e. the sum of all other terms < leading term )
    // This true if the expansion if increasing and nonoverlapping
    if ( a.v.back() > 0 )
@@ -115,7 +115,7 @@ add(const expansion& a, double b, expansion& sum)
 void
 add(const expansion& a, const expansion& b, expansion& sum)
 {
-   
+
    if(a.v.empty())
    {
       sum=b;
@@ -125,7 +125,7 @@ add(const expansion& a, const expansion& b, expansion& sum)
       sum=a;
       return;
    }
-      
+
    // Shewchuk's fast-expansion-sum
    expansion merge(a.v.size()+b.v.size(), 0);
    unsigned int i=0, j=0, k=0;
@@ -150,7 +150,7 @@ add(const expansion& a, const expansion& b, expansion& sum)
    fast_two_sum(merge.v[1], merge.v[0], q, r);
    if(r) sum.v.push_back(r);
    for(i=2; i<merge.v.size(); ++i){
-      two_sum(q, merge.v[i], q, r);    
+      two_sum(q, merge.v[i], q, r);
       if(r) sum.v.push_back(r);
    }
    if(q) sum.v.push_back(q);
@@ -232,8 +232,8 @@ multiply(const expansion& a, double b, expansion& product)
    // multiplication is a prime candidate for producing spurious zeros, so
    // remove them by default
    remove_zeros(product);
-   
-} 
+
+}
 
 //==============================================================================
 void
@@ -262,10 +262,10 @@ void compress( const expansion& e, expansion& h )
    }
 
    expansion g( e.v.size(), 0 );
-   
+
    size_t bottom = e.v.size() - 1;
    double q = e.v[bottom];
-   
+
    for ( ssize_t i = e.v.size() - 2; i >= 0; --i )
    {
       double new_q, small_q;
@@ -281,7 +281,7 @@ void compress( const expansion& e, expansion& h )
       }
    }
    g.v[bottom] = q;
-   
+
    h.v.resize( e.v.size(), 0 );
 
    unsigned int top = 0;
@@ -298,7 +298,7 @@ void compress( const expansion& e, expansion& h )
    }
    h.v[top] = q;
    h.resize( top+1 );
-         
+
 }
 
 
@@ -306,27 +306,27 @@ void compress( const expansion& e, expansion& h )
 
 bool divide( const expansion& x, const expansion& y, expansion& q )
 {
-   
+
    assert( !is_zero( y ) );
-   
-   if ( is_zero( x ) ) 
+
+   if ( is_zero( x ) )
    {
       // 0 / y = 0
       make_expansion( 0, q );
       return true;
    }
-   
+
    const double divisor = estimate(y);
-   
+
    // q is the quotient, built by repeatedly dividing the remainder
    // Initially, q = estimate(x) / estimate(y)
-   
+
    make_expansion( estimate(x) / divisor, q );
 
    expansion qy;
    multiply( q, y, qy );
    expansion r;
-   subtract( x, qy, r );  
+   subtract( x, qy, r );
 
    while ( !is_zero(r) )
    {
@@ -340,16 +340,16 @@ bool divide( const expansion& x, const expansion& y, expansion& q )
          assert ( !is_zero(y) );
          std::cout << "underflow, s == 0" << std::endl;
          std::cout << "divisor: " << divisor << std::endl;
-         return false;         
+         return false;
       }
-         
+
       // q += s
       add( q, s, q );
 
       // r -= s*y
       expansion sy;
       multiply( s, y, sy );
-      
+
       // underflow, quotient not representable by an expansion
       if ( is_zero(sy) )
       {
@@ -357,27 +357,27 @@ bool divide( const expansion& x, const expansion& y, expansion& q )
          std::cout << "underflow, sy == 0" << std::endl;
          return false;
       }
-      
-      subtract( r, sy, r );     
-      
+
+      subtract( r, sy, r );
+
       expansion compressed_r;
       compress( r, compressed_r );
       r = compressed_r;
-      
+
    }
-   
+
    remove_zeros( q );
    return true;
-   
+
 }
 
 //==============================================================================
 void
 remove_zeros(expansion& a)
 {
-   
+
    unsigned int i, j;
-   
+
    for ( i = 0, j = 0; i < a.v.size(); ++i )
    {
       if ( a.v[i] )
@@ -385,9 +385,9 @@ remove_zeros(expansion& a)
          a.v[j++] = a.v[i];
       }
    }
-   
+
    a.resize(j);
-   
+
 }
 
 //==============================================================================
@@ -405,35 +405,31 @@ estimate(const expansion& a)
 bool equals( const expansion& a, const expansion& b )
 {
    bool same = (a.v.size() == b.v.size());
-   
+
    if (!same) { return false; }
-   
+
    for ( unsigned int i = 0; i < a.v.size(); ++i )
    {
       same &= (a.v[i] == b.v[i]);
    }
-   
+
    return same;
-   
+
 }
 
 //==============================================================================
 
 void print_full( const expansion& e )
 {
-   if ( e.v.size() == 0 ) 
-   { 
+   if ( e.v.size() == 0 )
+   {
       std::cout << "0" << std::endl;
-      return; 
+      return;
    }
-   
+
    for ( unsigned int j = 0; j < e.v.size(); ++j )
    {
       std::cout << e.v[j] << " ";
    }
-   std::cout << std::endl;   
+   std::cout << std::endl;
 }
-
-
-
-
