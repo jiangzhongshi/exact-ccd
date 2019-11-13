@@ -724,9 +724,9 @@ namespace rootparity
 			make_vector(b1, ib1);
 			make_vector(c1, ic1);
 			make_vector(d1, id1);
-			int ret = Intersect_robust(ia0, ib0, ic0, id0, ia1, ib1, ic1, id1, false);
+			bool ret = Intersect_robust(ia0, ib0, ic0, id0, ia1, ib1, ic1, id1, false);
 
-			if (ret < 0) {
+			if (!ret) {
 				Vec3e ea0, ea1, eb0, eb1, ec0, ec1, ed0, ed1;
 				make_vector(a0, ea0);
 				make_vector(b0, eb0);
@@ -736,7 +736,7 @@ namespace rootparity
 				make_vector(b1, eb1);
 				make_vector(c1, ec1);
 				make_vector(d1, ed1);
-				int ret = Intersect_robust(ea0, eb0, ec0, ed0, ea1, eb1, ec1, ed1, false);
+				ret = Intersect_robust(ea0, eb0, ec0, ed0, ea1, eb1, ec1, ed1, false);
 			}
 
 			return ret;
@@ -760,9 +760,9 @@ namespace rootparity
 			make_vector(b1, ib1);
 			make_vector(c1, ic1);
 			make_vector(d1, id1);
-			int ret = Intersect_robust(ia0, ib0, ic0, id0, ia1, ib1, ic1, id1, true);
+			bool ret = Intersect_robust(ia0, ib0, ic0, id0, ia1, ib1, ic1, id1, true);
 
-			if (ret < 0) {
+			if (!ret) {
 				Vec3e ea0, ea1, eb0, eb1, ec0, ec1, ed0, ed1;
 				make_vector(a0, ea0);
 				make_vector(b0, eb0);
@@ -772,7 +772,7 @@ namespace rootparity
 				make_vector(b1, eb1);
 				make_vector(c1, ec1);
 				make_vector(d1, ed1);
-				int ret = Intersect_robust(ea0, eb0, ec0, ed0, ea1, eb1, ec1, ed1, true);
+				ret = Intersect_robust(ea0, eb0, ec0, ed0, ea1, eb1, ec1, ed1, true);
 			}
 
 			return ret;
