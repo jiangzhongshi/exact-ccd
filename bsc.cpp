@@ -73,7 +73,7 @@ namespace bsc
 		}
 	}
 
-	//					| a  b |
+	//				| a  b |
 	//  return		| c  d | = a*d - b*c
 	template <class T>
 	inline T det2x2(const T &a, const T &b, const T &c, const T &d)
