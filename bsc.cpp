@@ -220,10 +220,6 @@ namespace bsc
 		l3 = (dot(mX, n1) + dot(m1, nX))*T(3.0);
 		l4 = dot(m1, n1)*T(6.0);
 
-		if (!ee_test && which != 0) {
-			l0 = -l0, l1 = -l1, l2 = -l2, l3 = -l3, l4 = -l4;
-		}
-
 		if (which ==2 && ee_test) {
 			l0 = -l0, l1 = -l1, l2 = -l2, l3 = -l3, l4 = -l4;
 		}
@@ -462,7 +458,7 @@ namespace bsc
 
 			//T t = lineRoot(t0, t1);
 			//T fk = evaluateBezier2(c.kk0, c.kk1, c.kk2, t);
-			T fk = _evaluateBezier2(c.k0, c.k1, c.k2, t0, -t1);
+			T fk = _evaluateBezier2(c.kk0, c.kk1, c.kk2, t0, -t1);
 
 			if (sameSign(fk, c.kk0)) {
 				if (sameSign(c.k0, t1))
