@@ -192,7 +192,7 @@ public:
       v.clear();
    }
 
-   inline void resize( size_t new_size )
+   inline void resize( std::size_t new_size )
    {
       v.resize(new_size);
    }
